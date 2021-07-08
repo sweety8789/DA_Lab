@@ -1,0 +1,102 @@
+Q1.
+   euler <- function(n) {
+  if (n==1) return(NULL)
+  if (n==2) return(n)
+  l <- 2:n
+  i <- 1
+  p <- 2
+  while (p^2<=n) {
+    l <- l[l==p | l%%p!=0]
+    i <- i+1 
+    p <- l[i]
+  }
+  return(l)
+}
+
+prime.factors <- function (n) {
+  factors <- c() 
+  primes <- esieve(floor(sqrt(n))) 
+  d <- which(n%%primes == 0) 
+  if (length(d) == 0) 
+    return(n)
+  for (q in primes[d]) { 
+    while (n%%q == 0) { 
+      factors <- c(factors, q)
+      n <- n/q } } 
+  if (n > 1) factors <- c(factors, n)
+  return(factors)
+}
+
+print(max(prime.factors(13195)))
+
+
+Q2.
+sum=0;
+sq=0;
+res = 0;
+n = 10;
+
+sum = n*(n+1)/2;
+sq=(n*(n+1)*(2*n+1))/6;
+res=sum*sum-sq;
+print(res)
+
+Q3.
+genNums <- function() {
+  empty <- list()
+  l <- c(100:999) #the question is only interested in three digit numbers.  Lowest three digit number is 100.
+  for (i in l){
+    result <- i * l  #,multiply each item in list l by list l to obtain the set of possible products
+    empty <-  c(empty, result)  #concatonate the multiplication results into a list
+  }#end for loop
+  return(empty) 
+}#end function
+
+findPalindromes <- function(){
+  full <- genNums()
+  pals <- list()
+  print("I made it through genNums")
+  for (i in full){
+    if (i == rev(i)){
+    pals <- c(pals, i)
+    }
+  }#end for loop
+
+  maximum <-  max(pals)
+  print(c("The largest palindrome is " + maximu))
+}#end function
+
+Q4.
+number <- as.integer(1000000);
+ 
+sequenceLength <- as.integer(0);
+startingNumber <- as.integer(0);
+sequence<-as.integer();
+ 
+cache <- array(number + 1,1);
+//Initialise cache
+for (int i = 0; i < cache.Length; i++) {
+    cache[i] = -1;
+}
+cache[1] = 1;
+ 
+for (i = 2; i <= number; i++) {
+    sequence = i;
+    int k = 0;
+    while (sequence != 1 && sequence >= i) {
+        k++;
+        if ((sequence % 2) == 0) {
+            sequence = sequence / 2;
+        } else {
+            sequence = sequence * 3 + 1;
+        }
+    }
+    //Store result in cache
+    cache[i] = k + cache[sequence];
+ 
+    //Check if sequence is the best solution
+    if (cache[i] > sequenceLength) {
+        sequenceLength = cache[i];
+        startingNumber = i;
+    }
+}
